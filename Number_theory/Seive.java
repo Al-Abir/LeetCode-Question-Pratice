@@ -18,7 +18,7 @@ public class Seive {
 
 
         for (int i = 2; i <= n; i++) {
-            if (!prime[i]) { /
+            if (!prime[i]) { // If still false, it's a prime number
                 System.out.println(i);
             }
         }
