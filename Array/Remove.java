@@ -17,12 +17,13 @@ public class Remove {
     }
 
     public static void main(String[] args) {
-        int nums[] = {3, 2, 2, 3}; // Input array
         int val = 3; // Value to be removed
-
+        // Input array
+        int nums[] = {3, 2, 2, 3};
+        
         Remove solution = new Remove();
         int newLength = solution.removeElement(nums, val); // Store the new length
-
+        
         // Print only the relevant part of the array
         System.out.print("[");
         for (int i = 0; i < newLength; i++) {
