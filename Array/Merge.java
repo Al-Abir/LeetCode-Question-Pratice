@@ -1,7 +1,7 @@
 package Array;
 public class Merge {
    static public void merge(int[] nums1, int m, int[] nums2, int n) {
-        // Initialize pointers
+    
         int index1 = m - 1; // Pointer for the last element of the initial part of nums1
         int index2 = n - 1; // Pointer for the last element of nums2
         int merge = m + n - 1; // Pointer for the last position in nums1
