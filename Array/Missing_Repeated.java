@@ -11,6 +11,7 @@ public class Missing_Repeated {
         int Cursum = 0;
 
         for (int i = 0; i < n; i++) {
+         
             for (int j = 0; j < n; j++) {
                 int val = grid[i][j];
                 if (set.contains(val)) {
