@@ -7,7 +7,7 @@ using namespace std;
 
 void solve() {
     // Your code here
-    cout<<"Hello world";
+    
 }
 
 int main() {
