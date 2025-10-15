@@ -16,15 +16,14 @@ private:
         nodes.push_back(root->val);     // Root
     }
 };
+
+
 2️⃣ Iterative Postorder using two stacks
-
 Idea:
-
 Postorder = Left → Right → Root
-
 Reverse preorder trick: Preorder = Root → Left → Right
-
 যদি আমরা Root → Right → Left traverse করি এবং reverse করি, postorder পাই।
+
 
 class Solution {
 public:
@@ -63,38 +62,43 @@ Current node = stack top।
 Check করো: left বা right visit হয়নি → push করো।
 
 Left/Right visit হলে pop করে result push করো।
+
+
 class Solution {
 public:
     vector<int> postorderTraversal(TreeNode* root) {
-        vector<int> nodes;
-        if(!root) return nodes;
+        vector<int> post;
+        if (!root) return post;
 
         stack<TreeNode*> st;
-        TreeNode* prev = nullptr;
-        st.push(root);
+        TreeNode* curr = root;
+        TreeNode* temp;
 
-        while(!st.empty()) {
-            TreeNode* curr = st.top();
+        while (curr != nullptr || !st.empty()) {
+            if (curr != nullptr) {
+                st.push(curr);
+                curr = curr->left; // go left
+            } else {
+                temp = st.top()->right;
+                if (temp == nullptr) {
+                    // Right subtree is null → visit node
+                    temp = st.top();
+                    st.pop();
+                    post.push_back(temp->val);
 
-            // Going down
-            if(!prev || prev->left == curr || prev->right == curr) {
-                if(curr->left) st.push(curr->left);
-                else if(curr->right) st.push(curr->right);
+                    // Check whether the current node was right child of the new top
+                    while (!st.empty() && temp == st.top()->right) {
+                        temp = st.top();
+                        st.pop();
+                        post.push_back(temp->val);
+                    }
+                } else {
+                    curr = temp; // move to right subtree
+                }
             }
-            // Going up from left
-            else if(curr->left == prev) {
-                if(curr->right) st.push(curr->right);
-            }
-            // Going up from right
-            else {
-                nodes.push_back(curr->val);
-                st.pop();
-            }
-
-            prev = curr;
         }
 
-        return nodes;
+        return post;
     }
 };
 */

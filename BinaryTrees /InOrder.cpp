@@ -23,6 +23,7 @@ public:
         return nodes;
     }
 };
+
 class Solution {
 public:
     vector<int> inorderTraversal(TreeNode* root) {
@@ -41,33 +42,45 @@ private:
     }
 };
 
-
 class Solution {
 public:
     vector<int> inorderTraversal(TreeNode* root) {
-        vector<int> nodes;
-        while (root) {
-            if (root -> left) {
-                TreeNode* pre = root -> left;
-                while (pre -> right && pre -> right != root) {
-                    pre = pre -> right;
+        TreeNode* curr = root;
+        vector<int> ans;
+
+        while(curr!=nullptr){
+            if(curr->left==nullptr){
+                ans.push_back(curr->val);
+                curr=curr->right;
+            }else{
+                // find predecedor
+                TreeNode* IP = curr->left;
+                while(IP->right !=NULL && IP->right!=curr){
+                    IP = IP->right;
                 }
-                if (!pre -> right) {
-                    pre -> right = root;
-                    root = root -> left;
-                } else {
-                    pre -> right = NULL;
-                    nodes.push_back(root -> val);
-                    root = root -> right;
+                if(IP->right==NULL){
+                    IP->right = curr;  // create thread
+                    curr=curr->left;
+                }else{
+                    IP->right=nullptr; // delete thread
+                    ans.push_back(curr->val);
+                    curr=curr->right;
                 }
-            } else {
-                nodes.push_back(root -> val);
-                root = root -> right;
             }
+
+
         }
-        return nodes;
+        return ans;
     }
 };
 
+
+🧠 So, Summary:
+Concept	                     Inorder                               	Preorder
+Visit Timing	          After left subtree done	           Before left subtree start 
+Thread তৈরি করার সময়	   Visit করা হয় না                       Visit করা হয়
+Thread ভাঙার সময়	       Visit করা হয়	                        Visit করা হয় না
+Order	                   Left → Root → Right	               Root → Left → Right
+                     (root-left not available push root)       (root-left) available push root
 
 */
