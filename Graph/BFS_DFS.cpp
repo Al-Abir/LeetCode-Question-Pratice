@@ -30,7 +30,7 @@ class Graph{
         }
         cout<<endl;
     }
-   }
+}
 
    void bfs(){
     queue<int> q;
