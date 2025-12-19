@@ -3,40 +3,41 @@
 using namespace std;
 
 int main() {
-    int p[4] = {1, 2, 5, 6};
-    int wt[4] = {2, 3, 4, 5};
+    int n = 4; // number of items
+    int m = 8; // maximum bag capacity
 
-    int m = 8;
-    int k[5][9]; // (items+1) x (capacity+1)
+    int wt[5] = {0, 2, 3, 4, 5}; // 1-indexed weight
+    int P[5]  = {0, 1, 2, 5, 6}; // 1-indexed value
 
-    // Build DP table
-    for (int item = 0; item <= 4; item++) {
+    int k[5][9]; // DP table
+
+    // Fill DP table
+    for (int i = 0; i <= n; i++) {
         for (int w = 0; w <= m; w++) {
-            if (item == 0 || w == 0) {
-                k[item][w] = 0;
-            } 
-            else if (wt[item - 1] <= w) {
-                k[item][w] = max(p[item - 1] + k[item - 1][w - wt[item - 1]], 
-                                 k[item - 1][w]);
-            } 
-            else {
-                k[item][w] = k[item - 1][w];
+            if (i == 0 || w == 0) {
+                k[i][w] = 0;
+            } else if (wt[i] <= w) {
+                k[i][w] = max(P[i] + k[i-1][w - wt[i]], k[i-1][w]);
+            } else {
+                k[i][w] = k[i-1][w];
             }
         }
     }
 
-    cout << "Maximum Profit: " << k[4][m] << endl;
+    // Maximum value
+    cout << "Maximum value = " << k[n][m] << endl;
 
-    // Backtrack to find which items are taken
-    int i = 4, j = m;
+    // Backtracking to find which items are taken
+    int i = n, j = m;
     while (i > 0 && j > 0) {
-        if (k[i][j] == k[i - 1][j]) {
+        if (k[i][j] == k[i-1][j]) {
             cout << "Item " << i << " -> not taken (0)" << endl;
-            i--;
         } else {
             cout << "Item " << i << " -> taken (1)" << endl;
-            j = j - wt[i - 1];
-            i--;
+            j = j - wt[i]; // Corrected line
         }
+        i--;
     }
+
+    return 0;
 }
